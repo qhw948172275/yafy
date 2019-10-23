@@ -1,0 +1,8 @@
+@charset "utf-8";
+.actions>a, .actions>li>a{
+	width: 50px;
+}
+.lg-pagination {
+    padding: 20px 0;
+    text-align: left;
+}

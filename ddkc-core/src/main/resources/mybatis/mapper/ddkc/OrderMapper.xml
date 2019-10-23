@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yykj.ddkc.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.yykj.ddkc.entity.Order" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+    <result column="shop_id" property="shopId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="order_name" property="orderName" jdbcType="VARCHAR" />
+    <result column="contact" property="contact" jdbcType="VARCHAR" />
+    <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="contact_address" property="contactAddress" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectOrderProcessResponseByOrderId" resultType="com.yykj.ddkc.response.OrderProcessResponse">
+    select * from t_order tt where tt.id=#{orderId}
+  </select>
+
+  <resultMap id="orderDetailMap" type="com.yykj.ddkc.response.OrderDetailResponse">
+    <result column="morderId" property="orderId"  />
+    <result column="order_number" property="orderNumber"  />
+    <result column="member_id" property="memberId"  />
+    <result column="total_price" property="totalPrice"  />
+    <result column="discount_price" property="discountPrice"  />
+    <result column="status" property="status"  />
+    <result column="pay_time" property="payTime"  />
+    <result column="remark" property="remark"  />
+    <result column="order_name" property="orderName"  />
+    <result column="contact" property="contact"  />
+    <result column="contact_phone" property="contactPhone"  />
+    <result column="contact_address" property="contactAddress"  />
+    <result column="receipt_time" property="receiptTime"  />
+    <result column="take_over_time" property="takeOverTime"  />
+    <result column="shopName" property="shopName"/>
+    <result column="shop_id" property="shopId"/>
+    <result column="create_time" property="createTime"/>
+    <result column="freight" property="freight"/>
+    <result column="lng" property="lng"/>
+    <result column="lat" property="lat"/>
+     <result column="address_to" property="address"/>
+   <collection property="orderDetailsList" ofType="com.yykj.ddkc.entity.OrderDetails">
+     <result column="detailId" property="id"/>
+     <result column="goods_id" property="goodsId"/>
+     <result column="goods_name" property="goodsName"/>
+     <result column="sales_price" property="salesPrice"/>
+     <result column="counts" property="counts"/>
+     <result column="goodsHeadAddress"  property="goodsHeadAddress"/>
+     <result column="total_sales_price" property="totalSalesPrice"/>
+   </collection>
+  </resultMap>
+  <select id="selectOrderDetailResponseByOrderId" resultMap="orderDetailMap">
+SELECT
+tt.id morderId ,
+tt.order_number,
+tt.member_id,
+tt.total_price,
+tt.discount_price,
+tt.status,
+tt.pay_time,
+tt.remark,
+tt.order_name,
+tt.contact,
+tt.contact_phone,
+tt.contact_address,
+tt.receipt_time,
+tt.take_over_time,
+ts.name shopName,
+tt.shop_id,
+tt.create_time,
+tt.freight,
+
+ts.lat,
+ts.lng,
+
+tod.id detailId,
+tod.goods_id,
+tgs.goods_name,
+tod.sales_price,
+tod.counts,
+tod.total_sales_price,
+tgs.cover goodsHeadAddress
+
+FROM t_order_details tod
+left join t_order tt on tt.id=tod.order_id
+left join t_shop ts on tt.shop_id=ts.id
+left join t_goods tgs on tod.goods_id=tgs.id
+left join t_address taa on  taa.member_id=tt.member_id
+where tt.id=#{orderId}
+
+  </select>
+
+  <select id="selectByDate" resultType="com.yykj.ddkc.response.OrderLogResponse">
+select DATE_FORMAT(too.pay_time,'%Y-%m-%d') orderLogDate,
+count(case
+when too.`status`>=1
+then 1
+end ) orderCount,
+count(case
+when too.`status`=3
+then 1
+end ) successCount,
+sum(too.total_price) totalCost
+ from t_order too
+ where too.shop_id=#{shopId}
+ and DATE_FORMAT(too.pay_time,'%Y-%m-%d')=#{orderLogDate}
+  </select>
+  <select id="selectGoodsByDateOrder" resultType="com.yykj.ddkc.response.OrderGoodsResponse">
+select
+  tg.goods_name,
+  date_format(too.create_time,'%H:%m') placeOrderTime,
+	date_format(too.pay_time,'%H:%m' )  successPayTime,
+	tod.total_sales_price price
+ from
+ t_order_details tod
+ left join  t_order too  on tod.order_id=too.id
+ left join t_goods tg on tg.id=tod.goods_id
+ where too.shop_id=#{shopId}
+ and DATE_FORMAT(too.pay_time,'%Y-%m-%d')=#{orderLogDate}
+ ORDER BY too.create_time
+
+  </select>
+    <select id="selectOrderForPlatform" resultType="com.yykj.ddkc.response.OrderIndexResponse">
+      select  too.*,ts.name shopName from t_order too left join t_shop ts on ts.id=too.shop_id
+      where ts.status !=2
+      <if test="createId !=null">
+       and    ts.create_id=#{createId}
+      </if>
+      <if test="shopName !=null">
+        and  ts.name like #{shopName}
+      </if>
+      <if test="shopId !=null">
+          and  ts.id=#{shopId}
+      </if>
+      <if test="status !=null">
+          and  too.status=#{status}
+      </if>
+      <if test="startTime !=null and endTime !=null">
+          and  date_format(too.create_time,'%Y-%m-%d')>=#{startTime}
+          and  date_format(too.create_time,'%Y-%m-%d' )<![CDATA[<=]]>#{endTime}
+      </if>
+      order by too.create_time desc
+    </select>
+
+    <select id="selectOrderMapperByDate" resultType="com.yykj.ddkc.response.OrderCountResponse">
+SELECT
+	DATE_FORMAT( too.create_time, '%Y-%m-%d' ) dateStr,
+	count( too.id ) orderCount,
+	count( CASE WHEN too.`status` = 3 THEN 1 END ) successCount,
+	sum( CASE WHEN too.`status` = 3 THEN too.total_price else 0 END ) totalPrice,
+	sum( CASE WHEN too.`status` = 3 THEN too.platform_cost  else 0 END )  platformCost
+FROM
+	t_order too left join t_shop ts on too.shop_id=ts.id
+	where ts.status !=2
+	<if test="createId != null">
+     and ts.create_id=#{createId}
+    </if>
+	<if test="startTime != null and endTime !=null">
+     and  DATE_FORMAT( too.create_time, '%Y-%m-%d' )>=#{startTime}
+     and  DATE_FORMAT( too.create_time, '%Y-%m-%d' )<![CDATA[<=]]>#{endTime}
+    </if>
+     group by    DATE_FORMAT( too.create_time, '%Y-%m-%d' )
+     order by 	DATE_FORMAT( too.create_time, '%Y-%m-%d' ) desc
+    </select>
+
+    <select id="selectShopOrderCountResponseByDate" resultType="com.yykj.ddkc.response.ShopOrderCountResponse">
+        SELECT
+	DATE_FORMAT( too.create_time, '%Y-%m-%d' ) dateStr,
+	ts.`name` shopName,
+	ts.id shopId,
+	count( too.id ) orderCount,
+	count( CASE WHEN too.`status` = 3 THEN 1 END ) successCount ,
+	sum( CASE WHEN too.`status` = 3 THEN too.total_price else 0 END ) totalPrice,
+	sum( CASE WHEN too.`status` = 3 THEN too.platform_cost else 0 END )  platformCost
+FROM
+	t_order too left join t_shop ts on ts.id=too.shop_id
+	where ts.status !=2
+	<if test="createId !=null">
+       AND  ts.create_id=#{createId}
+    </if>
+    <if test="startTime != null and endTime !=null">
+            and  DATE_FORMAT( too.create_time, '%Y-%m-%d' )>=#{startTime}
+            and  DATE_FORMAT( too.create_time, '%Y-%m-%d' )<![CDATA[<=]]>#{endTime}
+    </if>
+GROUP BY
+   too.shop_id
+   order by DATE_FORMAT( too.create_time, '%Y-%m-%d' ) desc
+    </select>
+
+    <select id="selectPlatformCostCensus" resultType="com.yykj.ddkc.response.PlatformCostCensus">
+select date_format(too.take_over_time,'%d') dateDay,sum(too.platform_cost) amount
+ from t_order too left join t_shop ts on ts.id=too.shop_id
+
+where
+date_format(too.take_over_time,'%Y-%m')=#{newTime}
+and ts.status !=2
+<if test="createId !=null">
+ and   ts.create_id=#{createId}
+</if>
+GROUP BY date_format(too.take_over_time,'%d')
+    </select>
+
+    <select id="selectOrderPieResponse" resultType="com.yykj.ddkc.response.OrderPieResponse">
+SELECT
+	count( CASE WHEN too.`status` >= 1 THEN 1 END ) payOrder,
+	count( CASE WHEN too.`status` = 3 THEN 1 END ) finishOrder,
+	count( CASE WHEN too.`status` >= 4 THEN 1 END ) cancelOrder
+FROM
+	t_order too left join t_shop ts on ts.id=too.shop_id
+	where
+	DATE_FORMAT(too.create_time,'%Y-%m')=#{upMonth}
+	and ts.status !=2
+	<if test="createId !=null">
+        and ts.create_id=#{createId}
+    </if>
+    </select>
+    <select id="selectShopOrderResponse" resultType="com.yykj.ddkc.response.ShopOrderResponse">
+	 select 
+	 	ts.`name` shopName,
+		too.`status`,
+		group_CONCAT(tg.goods_name) goodsName,
+		count(tg.id) goodsCount,
+		too.id orderId,
+		too.total_goods_price totalPrice,
+		too.discount_price discountPrice
+	from  t_order too
+	left join t_shop ts on ts.id=too.shop_id
+	left join t_order_details tod on tod.order_id=too.id
+	left join t_goods tg on tg.id=tod.goods_id
+	where 
+		1=1 
+	<if test="null != shopId">
+		and ts.id=#{shopId}
+	</if>
+	<if test="status !=null">
+     <choose>
+         <when test="status ==3 ">
+           and   (too.`status`=3 or too.`status`=4 or too.`status`= 6)
+         </when>
+         <otherwise>
+           and   too.`status`=#{status}
+         </otherwise>
+     </choose>
+	</if>
+	<if test="merId != null">
+	    and  too.member_id=#{merId}
+	</if>
+	GROUP BY too.id
+	order by too.create_time desc
+    </select>
+</mapper>

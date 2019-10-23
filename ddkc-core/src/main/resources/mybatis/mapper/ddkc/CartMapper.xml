@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yykj.ddkc.dao.CartMapper" >
+  <resultMap id="BaseResultMap" type="com.yykj.ddkc.entity.Cart" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="shop_id" property="shopId" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="counts" property="counts" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="resultMap" type="com.yykj.ddkc.response.CartShopResponse" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+	<collection property="goodsResponse" ofType="com.yykj.ddkc.response.CartResponse">
+		<id column="cartId" property="id" jdbcType="INTEGER" />
+	    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+	    <result column="shop_id" property="shopId" jdbcType="INTEGER" />
+	    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+	    <result column="counts" property="counts" jdbcType="BIGINT" />
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="goodsName" property="goodsName" jdbcType="VARCHAR"/>
+	    <result column="cover" property="cover" jdbcType="VARCHAR"/>
+	    <result column="price" property="price" jdbcType="DECIMAL"/>
+	    <result column="salesPrice" property="salesPrice" jdbcType="DECIMAL"/>
+		<result column="quanity" property="quanity" />
+		<result column="stock" property="stock"/>
+	</collection>
+		
+  </resultMap>
+  
+  <select id="selectCartResponseByShopIdAndMemberId" resultType="com.yykj.ddkc.response.CartResponse">
+  	SELECT
+		tc.id,
+		tc.`status`,
+		tc.shop_id,
+		tc.member_id,
+		tc.goods_id,
+		tc.create_time,
+		tc.counts,
+		tg.goods_name AS goodsName,
+		tg.cover AS cover,
+		tg.price AS price,
+		tg.sales_price AS salesPrice,
+		tg.stock
+	FROM
+		t_cart tc
+		LEFT JOIN t_goods tg ON tg.id = tc.goods_id 
+	WHERE
+		tc.`status` = 0 
+		AND tg.`status` = 0 
+		AND tc.member_id = #{memberId}
+		AND tc.shop_id = #{shopId}
+	ORDER BY
+		tc.id DESC
+  </select>
+  
+  
+  <select id="selectCartResponseByIdIn" resultType="com.yykj.ddkc.response.CartResponse">
+  	SELECT
+		tc.id,
+		tc.`status`,
+		tc.shop_id,
+		tc.member_id,
+		tc.goods_id,
+		tc.create_time,
+		tc.counts,
+		tg.goods_name AS goodsName,
+		tg.cover AS cover,
+		tg.price AS price,
+		tg.sales_price AS salesPrice,
+		tg.stock as stock 
+	FROM
+		t_cart tc
+		LEFT JOIN t_goods tg ON tg.id = tc.goods_id 
+	WHERE
+		tc.`status` = 0 
+		AND tg.`status` = 0 
+		AND tc.member_id = #{memberId}
+		<if test="ids != null">
+			AND tc.id in 
+			<foreach collection="ids" item="i" separator="," open="(" close=")">
+				#{i}
+			</foreach>
+		</if>
+	ORDER BY
+		tc.id DESC
+  </select>
+  
+  <select id="selectCartShopResponseByMemberId" resultMap="resultMap">
+  	SELECT
+		tc.id as cartId,
+		tc.`status`,
+		tc.shop_id,
+		tc.member_id,
+		tc.goods_id,
+		tc.create_time,
+		tc.counts,
+		tg.goods_name AS goodsName,
+		tg.cover AS cover,
+		tg.price AS price,
+		tg.sales_price AS salesPrice ,
+		ts.id as id,
+		ts.`name` as name,
+		tg.quanity,
+		tg.stock as stock
+	FROM
+		t_cart tc
+		LEFT JOIN t_goods tg ON tg.id = tc.goods_id
+		LEFT JOIN t_shop ts on ts.id = tc.shop_id
+	WHERE
+		tc.`status` = 0 
+		AND tg.`status` = 0 
+		AND ts.`status` = 0
+		AND tc.member_id = #{memberId}
+	ORDER BY
+		tc.id DESC
+  </select>
+  <update id="updateStatusByList">
+	update t_cart tc
+	set tc.status=#{status}
+	    where
+	      1=1
+	 <if test="cartIds.size() >0">
+	    and  tc.id in
+		 <foreach collection="cartIds" item="cartId" open="(" separator="," close=")">
+			 #{cartId}
+		 </foreach>
+	 </if>
+  </update>
+  
+</mapper>

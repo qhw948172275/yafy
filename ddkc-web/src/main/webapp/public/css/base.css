@@ -1,0 +1,121 @@
+@charset "utf-8";
+.actions>a, .actions>li>a{
+	width: 50px;
+}
+.lg-pagination {
+    padding: 20px 0;
+    text-align: left;
+}
+
+.black{
+	color:#000 !important;
+}
+.bg-DBDBDB{
+	background:#DBDBDB !important;
+}
+.font-ccc{
+	color:#cccccc  !important;
+}
+.pd-15{
+	 padding: 15px 15px !important;
+}
+.red{
+	color:red !important;
+}
+.green{
+	color:green !important;
+}
+
+.center{
+	text-align: center;
+}
+
+.pointer{
+	cursor: pointer;
+}
+.form-control:not(.fc-alt){
+    border: 1px solid #eee;
+ }
+ #showForm input{
+ 	padding-left: 5px;
+ }	
+.note-editor{
+	overflow: visible;
+    border: 1px solid #e4e4e4 !important;
+}
+
+.exceed-ellipsis-hidden{
+	word-break:keep-all;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+
+.wpx300{
+	width:300px;
+}
+.wpx180{
+	width:180px;
+}
+.wpx80{
+	width:80px;
+}
+.wpx60{
+	width:60px;
+}
+.ml-100{
+	margin-left: 100px;
+}
+
+#header .hi-model{margin: 0 15px;}
+#header .hi-model a{padding: 7px 10px; color: #fff !important; text-transform: uppercase;display: block;font-size: 16px;}
+#header .hi-model.active{background-color: #1d6dad;}
+
+#header .hi-menu img{width: 25px; margin-right: 10px;margin-top: -8px;}
+#header .hi-menu .login-user{color: #fff !important;}
+
+.main-menu{margin: 0 !important;}
+
+@media only screen and (max-width: 640px) {
+	#header .hi-model{display: none;}
+}
+
+@media (min-width: 1280px) {
+  #content:not(.content-alt) {
+    padding-left: 270px;
+    padding-right: 5px;
+  }
+}
+
+/* breadcrumb custom style */
+.breadcrumb{margin-bottom: 5px;}
+.breadcrumb > li + li:before {
+  content: "/\00a0";
+  padding: 0 5px;
+  color: #ccc;
+}
+.breadcrumb > .pull-right{
+	color: #fd2a30;
+ 	cursor: pointer;
+}
+.breadcrumb > .pull-right:before {
+  content: "";
+  padding: 0 5px;
+  color: #ccc;
+}
+
+/* sweetalert custom content style */
+.swal2-modal .swal2-content{
+	text-align: left !important;
+}
+
+.lg-pagination{
+	width: auto;
+	float: left;
+}
+.page-go{
+	float:left;
+	display: inline-block; 
+	margin-top: 30px;
+	margin-left: 10px;
+}
