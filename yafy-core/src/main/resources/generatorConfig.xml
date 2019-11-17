@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 获取驱动 地址自己改-->
+    <context id="basesetMapper"  targetRuntime="MyBatis3Simple" defaultModelType="flat">
+
+        <!-- 根据Mapper生成实体类,xml文件 -->
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="com.yykj.system.commons.service.MyMapper"/>
+        </plugin>
+        <!-- 连接字符串 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1/yafy?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=GMT%2B8"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <!-- 指定生成“entity实体类、mybatis映射xml文件、mapper接口”的具体位置 -->
+        <javaModelGenerator targetPackage="com.yykj.business.entity" targetProject="src/main/java" >
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mybatis.mapper.business" targetProject="src/main/resources" >
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator targetPackage="com.yykj.business.dao" targetProject="src/main/java"   type="XMLMAPPER" >
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+
+        <!-- 具体要生成的表，如果有多个表，复制这一段，改下表名即可 -->
+        <!-- 系统默认表 需要修改生成报名路径将com.yykj.business 改为 com.yykj.system即可-->
+        <!--<table tableName="big_landlord" domainObjectName="BigLandlord" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+
+                <!--<table tableName="r_agreement_renant" domainObjectName="AgreementRenant" enableCountByExample="false" enableUpdateByExample="false"-->
+                       <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+                    <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+                <!--</table>-->
+                <!--<table tableName="r_area_agreement" domainObjectName="AreaAgreement" enableCountByExample="false" enableUpdateByExample="false"-->
+                       <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+                    <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+                <!--</table>-->
+                <!--<table tableName="r_landlord_area" domainObjectName="LandlordArea" enableCountByExample="false" enableUpdateByExample="false"-->
+                       <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+                    <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+                <!--</table>-->
+                <!--<table tableName="r_rent_area" domainObjectName="RentArea" enableCountByExample="false" enableUpdateByExample="false"-->
+                       <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+                    <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+                <!--</table>-->
+                <!--<table tableName="r_rent_manage_renant" domainObjectName="RentManageRenant" enableCountByExample="false" enableUpdateByExample="false"-->
+                       <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+                    <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+                <!--</table>-->
+                <!--<table tableName="r_room_renant" domainObjectName="RoomRenant" enableCountByExample="false" enableUpdateByExample="false"-->
+                       <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+                    <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+                <!--</table>-->
+                <!--<table tableName="t_renant" domainObjectName="Renant" enableCountByExample="false" enableUpdateByExample="false"-->
+                       <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+                    <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+                <!--</table>-->
+
+        <!--&lt;!&ndash; 业务表 需要修改生成报名路径&ndash;&gt;-->
+                <!--<table tableName="t_room" domainObjectName="Room" enableCountByExample="false" enableUpdateByExample="false"-->
+                       <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+                    <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+                <!--</table>-->
+                <!--<table tableName="t_area" domainObjectName="Area" enableCountByExample="false" enableUpdateByExample="false"-->
+                               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+                <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+                <!--</table>-->
+                <!--<table tableName="rent_manage" domainObjectName="RentManage" enableCountByExample="false" enableUpdateByExample="false"-->
+                               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+                <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+                <!--</table>-->
+                <!--<table tableName="r_special_practice_classes" domainObjectName="SpecialPracticeClasses" enableCountByExample="false" enableUpdateByExample="false"-->
+                               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+                <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+                <!--</table>-->
+        <!--        <table tableName="r_special_practice_question" domainObjectName="SpecialPracticeQuestion" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="r_student_classes" domainObjectName="StudentClasses" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_banner" domainObjectName="Banner" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_classes" domainObjectName="Classes" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_feedback" domainObjectName="Feedback" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_grade" domainObjectName="Grade" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_join_school" domainObjectName="JoinSchool" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_knowledge" domainObjectName="Knowledge" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_limit_practice_classes_log_question_detail" domainObjectName="LimitPracticeClassesLogQuestionDetail" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_limit_time_practice" domainObjectName="LimitTimePractice" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_limit_time_practice_class_log_detail" domainObjectName="LimitTimePracticeClassLogDetail" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_limit_time_practice_classes_log" domainObjectName="LimitTimePracticeClassesLog" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_message" domainObjectName="Message" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_parent" domainObjectName="Parent" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_question_bank" domainObjectName="QuestionBank" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_renewal" domainObjectName="Renewal" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_special_practice" domainObjectName="SpecialPractice" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_special_practice_class_log_detail" domainObjectName="SpecialPracticeClassLogDetail" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_special_practice_classes_log" domainObjectName="SpecialPracticeClassesLog" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_special_practice_classes_log_question_detail" domainObjectName="SpecialPracticeClassesLogQuestionDetail" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_student" domainObjectName="Student" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_subject" domainObjectName="Subject" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="t_version" domainObjectName="Version" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+
+    </context>
+</generatorConfiguration>

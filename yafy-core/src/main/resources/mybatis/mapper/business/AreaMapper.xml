@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yykj.business.dao.AreaMapper">
+  <resultMap id="BaseResultMap" type="com.yykj.business.entity.Area">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="block" jdbcType="VARCHAR" property="block" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="room_number" jdbcType="INTEGER" property="roomNumber" />
+    <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+</mapper>

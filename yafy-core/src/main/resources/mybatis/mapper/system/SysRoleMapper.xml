@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yykj.system.dao.SysRoleMapper">
+  <resultMap id="BaseResultMap" type="com.yykj.system.entity.SysRole">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="createtime" jdbcType="BIGINT" property="createtime" />
+    <result column="last_update_creator" jdbcType="VARCHAR" property="lastUpdateCreator" />
+    <result column="last_update_createtime" jdbcType="BIGINT" property="lastUpdateCreatetime" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="school_id" jdbcType="INTEGER" property="schoolId" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+  </resultMap>
+  <select id="selectByUserId" resultType="com.yykj.system.entity.SysRole">
+SELECT
+	*
+FROM
+	r_sys_role_user rsru
+	LEFT JOIN t_sys_role tsr ON tsr.id = rsru.role_id
+WHERE
+	tsr.`status` = #{status}
+	AND rsru.uid = #{userId}
+    </select>
+
+
+    <select id="selectRoleNamesByUserId" resultType="java.lang.String">
+SELECT
+	GROUP_CONCAT(tsr.role_name)
+FROM
+	r_sys_role_user rsru
+	LEFT JOIN t_sys_role tsr ON tsr.id = rsru.role_id
+WHERE
+	tsr.`status` = 0
+	AND rsru.uid = #{userId}
+group by rsru.uid
+    </select>
+
+</mapper>

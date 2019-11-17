@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yykj.business.dao.RentManageMapper">
+  <resultMap id="BaseResultMap" type="com.yykj.business.entity.RentManage">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="last_pay_time" jdbcType="TIMESTAMP" property="lastPayTime" />
+    <result column="next_pay_time" jdbcType="TIMESTAMP" property="nextPayTime" />
+    <result column="rent_cost" jdbcType="DECIMAL" property="rentCost" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+</mapper>

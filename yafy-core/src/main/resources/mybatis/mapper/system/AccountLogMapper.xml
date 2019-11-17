@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yykj.system.dao.AccountLogMapper">
+  <resultMap id="BaseResultMap" type="com.yykj.system.entity.AccountLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="methods" jdbcType="VARCHAR" property="methods" />
+    <result column="paths" jdbcType="VARCHAR" property="paths" />
+    <result column="params" jdbcType="VARCHAR" property="params" />
+    <result column="descr" jdbcType="VARCHAR" property="descr" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="account_id" jdbcType="INTEGER" property="accountId" />
+    <result column="account_time" jdbcType="TIMESTAMP" property="accountTime" />
+    <result column="school_id" jdbcType="INTEGER" property="schoolId" />
+  </resultMap>
+</mapper>

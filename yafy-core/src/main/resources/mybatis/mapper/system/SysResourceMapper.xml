@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yykj.system.dao.SysResourceMapper">
+  <resultMap id="BaseResultMap" type="com.yykj.system.entity.SysResource">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="resource_name" jdbcType="VARCHAR" property="resourceName" />
+    <result column="resource_url" jdbcType="VARCHAR" property="resourceUrl" />
+    <result column="is_basic" jdbcType="INTEGER" property="isBasic" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="parent_path" jdbcType="VARCHAR" property="parentPath" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="resource_kind" jdbcType="INTEGER" property="resourceKind" />
+    <result column="resource_type" jdbcType="INTEGER" property="resourceType" />
+    <result column="seq" jdbcType="INTEGER" property="seq" />
+    <result column="open_mode" jdbcType="INTEGER" property="openMode" />
+    <result column="opened" jdbcType="INTEGER" property="opened" />
+    <result column="icon2" jdbcType="VARCHAR" property="icon2" />
+  </resultMap>
+
+  <select id="selectByUserId" resultType="com.yykj.system.entity.SysResource">
+ select tsrc.* from t_sys_role tsr
+      left join r_sys_role_resource rsrr on tsr.id=rsrr.role_id
+      left join t_sys_resource tsrc on tsrc.id=rsrr.resource_id
+      where EXISTS (select 0 from (
+      select tsr2.id tsssrr from t_sys_user tsu
+      left join r_sys_role_user rssu on tsu.id=rssu.uid
+      left join t_sys_role tsr2 on tsr2.id=rssu.role_id
+      where tsu.id=#{userId}
+      ) rrr where tsr.id=rrr.tsssrr )
+      and tsrc.id is not null
+      group by tsrc.id
+      order by tsrc.seq
+  </select>
+</mapper>

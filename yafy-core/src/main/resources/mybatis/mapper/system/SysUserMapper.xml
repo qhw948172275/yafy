@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yykj.system.dao.SysUserMapper">
+  <resultMap id="BaseResultMap" type="com.yykj.system.entity.SysUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="login_Times" jdbcType="INTEGER" property="loginTimes" />
+    <result column="last_Login_Time" jdbcType="BIGINT" property="lastLoginTime" />
+    <result column="last_Login_Ip" jdbcType="VARCHAR" property="lastLoginIp" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="contact_phone" jdbcType="VARCHAR" property="contactPhone" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="role_names" jdbcType="VARCHAR" property="roleNames" />
+    <result column="school_id" jdbcType="INTEGER" property="schoolId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="cover" jdbcType="VARCHAR" property="cover" />
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+  </resultMap>
+
+  <select id="selectTeacher" resultType="com.yykj.system.entity.SysUser">
+    select tsu.* from t_sys_user tsu
+where  tsu.id in(
+select rsru.uid from r_sys_role_user rsru
+left join t_sys_role rsr on rsr.id=rsru.role_id
+where role_name='教师'
+<if test="schoolId !=0">
+ and rsr.school_id=#{schoolId}
+</if>
+   )
+
+<if test="keyword !=null">
+  and (tsu.name like #{keyword} or tsu.phone like #{keyword} or tsu.real_name like #{keyword} )
+</if>
+  </select>
+
+  <select id="selectUserName" resultType="java.lang.String">
+    select distinct tsu.name from t_sys_user tsu
+  </select>
+  <select id="selectTeacherInfoByParentId" resultType="com.yykj.system.entity.SysUser">
+SELECT
+DISTINCT
+	tsu.id,
+	tsu.real_name ,
+	tsu.phone
+FROM
+	t_classes tc
+	LEFT JOIN t_sys_user tsu ON tc.class_teacher = tsu.id or tc.instructor = tsu.id
+	where tc.id in (
+	select rsc.class_id from r_student_classes rsc left join t_student ts on ts.id=rsc.stu_id
+	left join r_parent_student rps on rps.stu_id =ts.id left join t_parent tp on tp.id=rps.parent_id
+   where tp.id=#{parentId}
+	 and  tp.school_id=#{schoolId}
+	)
+  </select>
+    <select id="getListByStatus" resultType="com.yykj.system.entity.SysUser">
+        SELECT u.id,u.`name`,u.phone,u.real_name from t_sys_user u INNER JOIN r_sys_role_user sru on sru.uid = u.id
+        INNER JOIN t_sys_role r on sru.role_id = r.id
+        <where>
+           and  r.`role_name` = '教师' and r.`status` = 0 and u.`status` = 0
+           <if test="keyword != null and keyword != ''">
+               and (u.`name` LIKE CONCAT('%',#{keyword},'%') or  u.phone LIKE CONCAT('%',#{keyword},'%'))
+           </if>
+           <if test="schoolId != null and schoolId != 0">
+               and u.school_id = #{schoolId}
+           </if>
+
+        </where>
+    </select>
+</mapper>
