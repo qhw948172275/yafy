@@ -32,7 +32,7 @@ import java.util.List;
  **/
 @Api(tags = "大房东")
 @RestController
-@RequestMapping("BigLandlord")
+@RequestMapping("bigLandlord")
 public class BigLandlordController extends BaseController {
     @Autowired
     BigLandlordService bigLandlordService;
