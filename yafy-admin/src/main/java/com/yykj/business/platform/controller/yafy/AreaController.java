@@ -103,63 +103,79 @@ public class AreaController extends BaseController {
             }
     }
 
-
     /**
-     * description:  大房东信息详情
+     * description:套房详情
      * create by: qhw
-     * create time: 2019/11/17 0017 下午 21:04
+     * create time: 2019/11/25 0025 下午 22:49
      */
-    @ApiImplicitParam(name = "areaId",value = "小区套房ID")
-    @GetMapping("bigLandlordDetail")
-    @ApiOperation(value = "大房东信息详情",response = BigLandlordDetailResponse.class)
-    public JsonResult bigLandlordDetail(@RequestParam Integer areaId){
+    @ApiOperation(value = "套房详情",response = Area.class)
+    @GetMapping("detail")
+    public JsonResult detail(@RequestParam Integer areaId){
         try {
-            BigLandlordDetailResponse bigLandlordDto=bigLandlordService.selectBigLandlordDtoByAreaId(areaId);
-            return JsonResultUtils.buildJsonOK(bigLandlordDto);
-        }catch (Exception e){
-            e.printStackTrace();
-            return JsonResultUtils.buildJsonFailMsg(e.getMessage());
-        }
-
-    }
-
-    /**
-     * description:  缴费记录
-     * create by: qhw
-     * create time: 2019/11/17 0017 下午 20:42
-     */
-    @ApiOperation(value = "缴费记录",response = RentManage.class)
-    @GetMapping("payTimeLog")
-    @ApiImplicitParam(name = "areaId",value = "小区套房ID")
-    public JsonResult payTimeLog(@RequestParam Integer areaId,@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                 @RequestParam(value = "limit", defaultValue = "20") Integer limit){
-        try {
-            PageHelper.startPage(page,limit);
-            List<RentManage> rentManages=rentManageService.selectRentManage(areaId);
-            return JsonResultUtils.buildJsonOK(new PageInfo<>(rentManages));
+            Area area=areaService.getById(areaId);
+            return JsonResultUtils.buildJsonOKData("area",area);
         }catch (Exception e){
             e.printStackTrace();
             return JsonResultUtils.buildJsonFailMsg(e.getMessage());
         }
     }
 
-    /**
-     * description:  合同记录
-     * create by: qhw
-     * create time: 2019/11/17 0017 下午 22:47
-     */
-    @ApiOperation(value = "合同记录",response = Agreement.class )
-    @GetMapping("agreementLog")
-    @ApiImplicitParam(name = "areaId",value = "小区套房ID")
-    public JsonResult agreementLog(@RequestParam Integer areaId,@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                   @RequestParam(value = "limit", defaultValue = "20") Integer limit){
-        try {
-            PageHelper.startPage(page,limit);
-            List<Agreement> agreements=agreementService.selectAgreementByAreaId(areaId);
-            return JsonResultUtils.buildJsonOK(new PageInfo<>(agreements));
-        }catch (Exception e){
-            e.printStackTrace();
-            return JsonResultUtils.buildJsonFailMsg(e.getMessage());
-        }
-    }
+//    /**
+//     * description:  大房东信息详情
+//     * create by: qhw
+//     * create time: 2019/11/17 0017 下午 21:04
+//     */
+//    @ApiImplicitParam(name = "areaId",value = "小区套房ID")
+//    @GetMapping("bigLandlordDetail")
+//    @ApiOperation(value = "大房东信息详情",response = BigLandlordDetailResponse.class)
+//    public JsonResult bigLandlordDetail(@RequestParam Integer areaId){
+//        try {
+//            BigLandlordDetailResponse bigLandlordDto=bigLandlordService.selectBigLandlordDtoByAreaId(areaId);
+//            return JsonResultUtils.buildJsonOK(bigLandlordDto);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return JsonResultUtils.buildJsonFailMsg(e.getMessage());
+//        }
+//
+//    }
+
+//    /**
+//     * description:  缴费记录
+//     * create by: qhw
+//     * create time: 2019/11/17 0017 下午 20:42
+//     */
+//    @ApiOperation(value = "缴费记录",response = RentManage.class)
+//    @GetMapping("payTimeLog")
+//    @ApiImplicitParam(name = "areaId",value = "小区套房ID")
+//    public JsonResult payTimeLog(@RequestParam Integer areaId,@RequestParam(value = "page", defaultValue = "1") Integer page,
+//                                 @RequestParam(value = "limit", defaultValue = "20") Integer limit){
+//        try {
+//            PageHelper.startPage(page,limit);
+//            List<RentManage> rentManages=rentManageService.selectRentManage(areaId);
+//            return JsonResultUtils.buildJsonOK(new PageInfo<>(rentManages));
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return JsonResultUtils.buildJsonFailMsg(e.getMessage());
+//        }
+//    }
+
+//    /**
+//     * description:  合同记录
+//     * create by: qhw
+//     * create time: 2019/11/17 0017 下午 22:47
+//     */
+//    @ApiOperation(value = "合同记录",response = Agreement.class )
+//    @GetMapping("agreementLog")
+//    @ApiImplicitParam(name = "areaId",value = "小区套房ID")
+//    public JsonResult agreementLog(@RequestParam Integer areaId,@RequestParam(value = "page", defaultValue = "1") Integer page,
+//                                   @RequestParam(value = "limit", defaultValue = "20") Integer limit){
+//        try {
+//            PageHelper.startPage(page,limit);
+//            List<Agreement> agreements=agreementService.selectAgreementByAreaId(areaId);
+//            return JsonResultUtils.buildJsonOK(new PageInfo<>(agreements));
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return JsonResultUtils.buildJsonFailMsg(e.getMessage());
+//        }
+//    }
 }

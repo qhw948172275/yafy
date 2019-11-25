@@ -89,4 +89,20 @@ public class RoomController extends BaseController {
             return JsonResultUtils.buildJsonFailMsg(e.getMessage());
         }
     }
+    /**
+     * description:小房间详情
+     * create by: qhw
+     * create time: 2019/11/25 0025 下午 23:00
+     */
+    @ApiOperation(value = "小房间详情",response =Room.class )
+    @GetMapping("detail")
+    public JsonResult detail(@RequestParam Integer roomId){
+        try {
+            Room room=roomService.getById(roomId);
+            return JsonResultUtils.buildJsonOKData("room",room);
+        }catch (Exception e){
+            e.printStackTrace();
+            return JsonResultUtils.buildJsonFailMsg(e.getMessage());
+        }
+    }
 }

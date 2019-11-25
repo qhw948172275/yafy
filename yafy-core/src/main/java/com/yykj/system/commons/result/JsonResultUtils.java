@@ -1,5 +1,8 @@
 package com.yykj.system.commons.result;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.yykj.system.commons.JsonUtils;
+
 /**
  * 返回标准json格式,工具方法
  *
@@ -98,6 +101,16 @@ public class JsonResultUtils {
 	 */
 	public static JsonResult buildJsonOK() {
 		return buildJson(OK, null, SUCCESS_CODE, null);
+	}
+	/**
+	 * description:封装带有数据的正确返回
+	 * create by: qhw
+	 * create time: 2019/11/25 0025 下午 22:42
+	 */
+	public static JsonResult buildJsonOKData(String dataName,Object o){
+		ObjectNode json= JsonUtils.getMapperInstance().createObjectNode();
+		json.putPOJO(dataName,o);
+		return buildJsonOK(json);
 	}
 
 	/**

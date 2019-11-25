@@ -13,6 +13,7 @@ import com.yykj.business.service.AgreementService;
 import com.yykj.business.service.BigLandlordService;
 import com.yykj.business.service.RentManageService;
 import com.yykj.system.commons.CalendarUtils;
+import com.yykj.system.commons.SystemConstants;
 import com.yykj.system.commons.result.JsonResult;
 import com.yykj.system.commons.result.JsonResultUtils;
 import io.swagger.annotations.Api;
@@ -111,6 +112,41 @@ public class BigLandlordController extends BaseController {
             }else{
                 bigLandlordService.updateById(bigLandlord);
             }
+            return JsonResultUtils.buildJsonOK();
+        }catch (Exception e){
+            e.printStackTrace();
+            return JsonResultUtils.buildJsonFailMsg(e.getMessage());
+        }
+    }
+    /**
+     * description:大房东详情
+     * create by: qhw
+     * create time: 2019/11/25 0025 下午 22:51
+     */
+    @ApiOperation(value = "大房东详情",response = BigLandlord.class)
+    @GetMapping("detail")
+    public JsonResult detail(@RequestParam Integer bigLandlordId){
+        try {
+            BigLandlord bigLandlord=bigLandlordService.getById(bigLandlordId);
+            return JsonResultUtils.buildJsonOKData("bigLandlord",bigLandlord);
+        }catch (Exception e){
+            e.printStackTrace();
+            return JsonResultUtils.buildJsonFailMsg(e.getMessage());
+        }
+    }
+    /**
+     * description:删除大房东
+     * create by: qhw
+     * create time: 2019/11/25 0025 下午 22:53
+     */
+    @ApiOperation("删除大房东")
+    @GetMapping("delete")
+    public JsonResult delete(@RequestParam Integer bigLandlordId){
+        try {
+            BigLandlord bigLandlord=new BigLandlord();
+            bigLandlord.setId(bigLandlordId);
+            bigLandlord.setStatus(SystemConstants.STATUS_NO.byteValue());
+            bigLandlordService.updateById(bigLandlord);
             return JsonResultUtils.buildJsonOK();
         }catch (Exception e){
             e.printStackTrace();

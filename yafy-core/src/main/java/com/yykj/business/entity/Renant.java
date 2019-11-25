@@ -3,6 +3,7 @@ package com.yykj.business.entity;
 import com.yykj.system.commons.SystemConstants;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "t_renant")
 public class Renant {
@@ -30,6 +31,9 @@ public class Renant {
      * 状态；0-启用，1-禁用
      */
     private Byte status;
+
+    private Integer creatorId;
+    private Date createTime;
 
     /**
      * @return id
@@ -126,5 +130,21 @@ public class Renant {
         this.phone=phone;
         this.idCrad=idCrad;
         this.status= SystemConstants.STATUS_OK.byteValue();
+    }
+
+    public Integer getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(Integer creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

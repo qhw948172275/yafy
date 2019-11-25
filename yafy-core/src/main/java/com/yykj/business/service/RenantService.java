@@ -7,10 +7,12 @@ import com.yykj.business.entity.Renant;
 import com.yykj.business.entity.Room;
 import com.yykj.system.commons.service.impl.AbstractBaseCrudService;
 import com.yykj.system.entity.SysUser;
-import io.swagger.annotations.ApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
+
+import java.util.List;
 
 /**
  * @Author qhw
@@ -35,5 +37,17 @@ public class RenantService extends AbstractBaseCrudService<Renant,Integer> {
         this.mapper.insert(renant);
         Room room=new Room(renantDto.getAreaId(),sysUer.getId(),renantDto.getKeyPath(),(byte)1,1,renantDto.getType());
         roomMapper.insert(room);
+    }
+    /**
+     * description:查询该用户下的所有租客
+     * create by: qhw
+     * create time: 2019/11/25 0025 下午 22:12
+     */
+    public List<Renant> selectAllListByUserId(Integer userId) {
+        Example example=new Example(tClass);
+        Example.Criteria criteria=example.createCriteria();
+        criteria.andEqualTo("creatorId",userId).andEqualTo("status",0);
+        example.setOrderByClause("id desc");
+        return mapper.selectByExample(example);
     }
 }
