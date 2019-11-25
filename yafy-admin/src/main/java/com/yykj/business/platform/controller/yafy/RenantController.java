@@ -7,6 +7,7 @@ import com.yykj.business.response.RenantIndexResponse;
 import com.yykj.business.service.RenantService;
 import com.yykj.system.commons.result.JsonResult;
 import com.yykj.system.commons.result.JsonResultUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date 2019/11/20 0020 下午 15:16
  * @Version V1.0
  **/
+@Api(tags = {"租客管理","先不对----doing----"})
 @RestController
 @RequestMapping("renant")
 public class RenantController extends BaseController {

@@ -15,6 +15,7 @@ import com.yykj.system.commons.CalendarUtils;
 import com.yykj.system.commons.SystemConstants;
 import com.yykj.system.commons.result.JsonResult;
 import com.yykj.system.commons.result.JsonResultUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import java.util.List;
  * @Date 2019/11/20 0020 下午 17:07
  * @Version V1.0
  **/
+@Api(tags = "套房管理")
 @RestController
 @RequestMapping("area")
 public class AreaController extends BaseController {
