@@ -1,5 +1,7 @@
 package com.yykj.business.entity;
 
+import com.yykj.system.commons.SystemConstants;
+
 import javax.persistence.*;
 
 @Table(name = "t_renant")
@@ -22,12 +24,12 @@ public class Renant {
      * 身份证号码
      */
     @Column(name = "id_crad")
-    private Long idCrad;
+    private String idCrad;
 
     /**
      * 状态；0-启用，1-禁用
      */
-    private Long status;
+    private Byte status;
 
     /**
      * @return id
@@ -84,7 +86,7 @@ public class Renant {
      *
      * @return id_crad - 身份证号码
      */
-    public Long getIdCrad() {
+    public String getIdCrad() {
         return idCrad;
     }
 
@@ -93,7 +95,7 @@ public class Renant {
      *
      * @param idCrad 身份证号码
      */
-    public void setIdCrad(Long idCrad) {
+    public void setIdCrad(String idCrad) {
         this.idCrad = idCrad;
     }
 
@@ -102,7 +104,7 @@ public class Renant {
      *
      * @return status - 状态；0-启用，1-禁用
      */
-    public Long getStatus() {
+    public Byte getStatus() {
         return status;
     }
 
@@ -111,7 +113,18 @@ public class Renant {
      *
      * @param status 状态；0-启用，1-禁用
      */
-    public void setStatus(Long status) {
+    public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public Renant(){
+
+    }
+
+    public Renant(String name,String phone,String idCrad){
+        this.name=name;
+        this.phone=phone;
+        this.idCrad=idCrad;
+        this.status= SystemConstants.STATUS_OK.byteValue();
     }
 }

@@ -1,5 +1,10 @@
 package com.yykj.business.entity;
 
+import com.yykj.system.commons.CalendarUtils;
+import com.yykj.system.commons.SystemConstants;
+import com.yykj.system.entity.SysUser;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -9,16 +14,19 @@ public class BigLandlord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ApiModelProperty("名称")
     private String name;
 
     /**
      * 电话
      */
+    @ApiModelProperty("电话")
     private String phone;
 
     /**
      * 小区ID
      */
+    @Deprecated
     @Column(name = "area_id")
     private Integer areaId;
 
@@ -37,6 +45,7 @@ public class BigLandlord {
     /**
      * 状态：0-启用，1-禁用
      */
+    @ApiModelProperty("状态：0-启用，1-禁用")
     private Byte status;
 
     /**
@@ -155,5 +164,17 @@ public class BigLandlord {
      */
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public BigLandlord (){
+
+    }
+
+    public BigLandlord (String name, String phone, SysUser sysUser){
+        this.createTime= CalendarUtils.getDate();
+        this.creatorId=sysUser.getId();
+        this.name=name;
+        this.phone=phone;
+        this.status= SystemConstants.STATUS_OK.byteValue();
     }
 }

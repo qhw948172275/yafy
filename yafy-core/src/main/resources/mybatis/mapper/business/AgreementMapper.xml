@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yykj.business.dao.AgreementMapper">
+  <resultMap id="BaseResultMap" type="com.yykj.business.entity.Agreement">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="deposit" jdbcType="DECIMAL" property="deposit" />
+    <result column="agreement_strat_time" jdbcType="TIMESTAMP" property="agreementStratTime" />
+    <result column="agreement_end_time" jdbcType="TIMESTAMP" property="agreementEndTime" />
+    <result column="degree" jdbcType="INTEGER" property="degree" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <select id="selectAgreementByAreaId" resultType="com.yykj.business.entity.Agreement">
+    SELECT
+	tg.*
+FROM
+	t_agreement tg
+	LEFT JOIN r_area_agreement raa ON tg.id = raa.agreement_id
+WHERE
+	raa.area_id =#{areaId}
+  </select>
+</mapper>

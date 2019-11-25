@@ -69,4 +69,13 @@ public class AreaAgreement {
     public void setAgreementId(Integer agreementId) {
         this.agreementId = agreementId;
     }
+
+    public AreaAgreement(){
+
+    }
+
+    public AreaAgreement(Integer areaId,Integer agreementId){
+        this.agreementId=agreementId;
+        this.areaId=areaId;
+    }
 }

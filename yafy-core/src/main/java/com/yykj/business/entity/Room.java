@@ -1,5 +1,9 @@
 package com.yykj.business.entity;
 
+import com.yykj.system.commons.CalendarUtils;
+import com.yykj.system.commons.SystemConstants;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -10,25 +14,22 @@ public class Room {
     private Integer id;
 
     /**
-     * 房间类型
+     * 房间类型(主卧，大次卧，小次卧。大隔断，小隔断，黑房间，其他)
      */
+    @ApiModelProperty("房间类型(主卧，大次卧，小次卧。大隔断，小隔断，黑房间，其他)")
     private String type;
-
-    /**
-     * 付款方式；0-月付，1-季付，2-半年付，3-年付
-     */
-    @Column(name = "pay_type")
-    private Byte payType;
 
     /**
      * 是否是空房，0-是，1-不是
      */
+    @ApiModelProperty("是否是空房，0-是，1-不是")
     @Column(name = "is_null")
     private Byte isNull;
 
     /**
      * 租客人数
      */
+    @ApiModelProperty("租客人数")
     @Column(name = "tenant_nember")
     private Integer tenantNember;
 
@@ -47,8 +48,15 @@ public class Room {
     /**
      * 钥匙存放地址
      */
+    @ApiModelProperty("key_path")
     @Column(name = "key_path")
     private String keyPath;
+
+
+    @ApiModelProperty("0-启用，1-禁用")
+    private Byte status;
+    @ApiModelProperty("套房ID")
+    private Integer areaId;
 
     /**
      * @return id
@@ -82,23 +90,7 @@ public class Room {
         this.type = type == null ? null : type.trim();
     }
 
-    /**
-     * 获取付款方式；0-月付，1-季付，2-半年付，3-年付
-     *
-     * @return pay_type - 付款方式；0-月付，1-季付，2-半年付，3-年付
-     */
-    public Byte getPayType() {
-        return payType;
-    }
 
-    /**
-     * 设置付款方式；0-月付，1-季付，2-半年付，3-年付
-     *
-     * @param payType 付款方式；0-月付，1-季付，2-半年付，3-年付
-     */
-    public void setPayType(Byte payType) {
-        this.payType = payType;
-    }
 
     /**
      * 获取是否是空房，0-是，1-不是
@@ -188,5 +180,36 @@ public class Room {
      */
     public void setKeyPath(String keyPath) {
         this.keyPath = keyPath == null ? null : keyPath.trim();
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public Integer getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(Integer areaId) {
+        this.areaId = areaId;
+    }
+
+    public Room(){
+
+    }
+
+    public Room(Integer areaId,Integer creatorId,String keyPath,Byte isNull,Integer tenantNember,String type){
+        this.areaId=areaId;
+        this.createTime= CalendarUtils.getDate();
+        this.creatorId=creatorId;
+        this.keyPath=keyPath;
+        this.isNull=isNull;
+        this.tenantNember=tenantNember;
+        this.type=type;
+        this.status= SystemConstants.STATUS_OK.byteValue();
     }
 }

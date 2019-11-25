@@ -13,4 +13,10 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+  <select id="selectRentManage" resultType="com.yykj.business.entity.RentManage">
+    select rm.* from r_rent_area rra left join rent_manage rm on rm.id=rra.rent_manage_id
+where rra.area_id=#{areaId}
+and rm.`status`=1
+ORDER BY rm.create_time desc
+  </select>
 </mapper>

@@ -1,5 +1,9 @@
 package com.yykj.business.entity;
 
+import com.yykj.system.commons.CalendarUtils;
+import com.yykj.system.commons.SystemConstants;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
@@ -13,18 +17,21 @@ public class RentManage {
     /**
      * 上次缴纳租金时间
      */
+    @ApiModelProperty("上次缴纳租金时间")
     @Column(name = "last_pay_time")
     private Date lastPayTime;
 
     /**
      * 下次缴纳租金时间
      */
+    @ApiModelProperty("下次缴纳租金时间")
     @Column(name = "next_pay_time")
     private Date nextPayTime;
 
     /**
      * 租金费用
      */
+    @ApiModelProperty("租金费用")
     @Column(name = "rent_cost")
     private BigDecimal rentCost;
 
@@ -43,6 +50,7 @@ public class RentManage {
     /**
      * 是否交租：0-未交，1-已交
      */
+    @ApiModelProperty("是否交租：0-未交，1-已交")
     private Integer status;
 
     /**
@@ -165,5 +173,17 @@ public class RentManage {
      */
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public RentManage(){
+
+    }
+    public RentManage(BigDecimal rentCost,Date lastPayTime,Date nextPayTime,Integer creatorId){
+        this.createTime= CalendarUtils.getDate();
+        this.creatorId=creatorId;
+        this.lastPayTime=lastPayTime;
+        this.nextPayTime=nextPayTime;
+        this.rentCost=rentCost;
+        this.status= SystemConstants.STATUS_OK;
     }
 }

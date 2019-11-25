@@ -69,4 +69,13 @@ public class RentArea {
     public void setRentManageId(Integer rentManageId) {
         this.rentManageId = rentManageId;
     }
+
+    public RentArea(){
+
+    }
+
+    public RentArea(Integer areaId,Integer rentManageId){
+        this.areaId=areaId;
+        this.rentManageId=rentManageId;
+    }
 }

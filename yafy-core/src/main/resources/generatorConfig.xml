@@ -32,10 +32,10 @@
 
         <!-- 具体要生成的表，如果有多个表，复制这一段，改下表名即可 -->
         <!-- 系统默认表 需要修改生成报名路径将com.yykj.business 改为 com.yykj.system即可-->
-        <!--<table tableName="big_landlord" domainObjectName="BigLandlord" enableCountByExample="false" enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
-            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="t_agreement" domainObjectName="Agreement" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
 
                 <!--<table tableName="r_agreement_renant" domainObjectName="AgreementRenant" enableCountByExample="false" enableUpdateByExample="false"-->
                        <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->

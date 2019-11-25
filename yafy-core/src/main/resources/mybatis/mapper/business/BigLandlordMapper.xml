@@ -13,4 +13,44 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
+  <select id="selectBigLandlordDto" resultType="com.yykj.business.response.BigLandlordResponse">
+SELECT
+	ta.NAME areaName,
+	tbl.NAME bigLandlordName,
+	tbl.phone bigLandlordPhone,
+	ta.block,
+	max(rm.last_pay_time) lastPayTime,
+	max(rm.last_pay_time) nextPayTime,
+	rm.rent_cost rentCost,
+	ta.unit,
+	ta.room_number  roomNumber,
+	ta.id areaId,
+	rm.id rentManageId,
+	count(rm.id) countMonth
+FROM
+	`big_landlord` tbl
+	LEFT JOIN r_landlord_area rla ON tbl.id = rla.landlord_id
+	LEFT JOIN t_area ta ON rla.area_id = ta.id
+	LEFT JOIN r_rent_area rra ON ta.id = rra.area_id
+	LEFT JOIN rent_manage rm ON rra.rent_manage_id = rm.id
+	where tbl.creator_id=#{userId}
+	and rm.status=#{status}
+	GROUP BY  ta.id
+	ORDER BY rm.last_pay_time  desc
+  </select>
+  <select id="selectBigLandlordDtoByAreaId" resultType="com.yykj.business.response.BigLandlordDetailResponse">
+    SELECT
+	bl.`name` landlordName,
+	bl.phone,
+	ta.name,
+	ta.block,
+	ta.unit,
+	ta.room_number
+FROM
+	t_area ta
+	LEFT JOIN r_landlord_area rla ON ta.id = rla.area_id
+	LEFT JOIN big_landlord bl ON bl.id = rla.landlord_id
+WHERE
+	ta.id =#{areaId}
+  </select>
 </mapper>

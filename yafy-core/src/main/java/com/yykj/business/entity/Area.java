@@ -1,5 +1,10 @@
 package com.yykj.business.entity;
 
+import com.yykj.system.commons.CalendarUtils;
+import com.yykj.system.commons.SystemConstants;
+import com.yykj.system.entity.SysUser;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -12,21 +17,25 @@ public class Area {
     /**
      * 小区名称
      */
+    @ApiModelProperty("小区名称")
     private String name;
 
     /**
      * 幢
      */
+    @ApiModelProperty("幢")
     private String block;
 
     /**
      * 单元
      */
+    @ApiModelProperty("单元")
     private String unit;
 
     /**
      * 门牌号
      */
+    @ApiModelProperty("门牌号")
     @Column(name = "room_number")
     private Integer roomNumber;
 
@@ -34,7 +43,7 @@ public class Area {
      * 创建人ID
      */
     @Column(name = "creator_id")
-    private Long creatorId;
+    private Integer creatorId;
 
     /**
      * 创建时间
@@ -45,7 +54,10 @@ public class Area {
     /**
      * 状态：0-启用，1-禁用
      */
+    @ApiModelProperty("状态：0-启用，1-禁用")
     private Byte status;
+    @ApiModelProperty("大房东ID")
+    private Integer bigLandlordId;
 
     /**
      * @return id
@@ -138,7 +150,7 @@ public class Area {
      *
      * @return creator_id - 创建人ID
      */
-    public Long getCreatorId() {
+    public Integer getCreatorId() {
         return creatorId;
     }
 
@@ -147,7 +159,7 @@ public class Area {
      *
      * @param creatorId 创建人ID
      */
-    public void setCreatorId(Long creatorId) {
+    public void setCreatorId(Integer creatorId) {
         this.creatorId = creatorId;
     }
 
@@ -185,5 +197,27 @@ public class Area {
      */
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public Integer getBigLandlordId() {
+        return bigLandlordId;
+    }
+
+    public void setBigLandlordId(Integer bigLandlordId) {
+        this.bigLandlordId = bigLandlordId;
+    }
+
+    public Area(){
+
+    }
+
+    public Area(String name, String block, String unit, Integer roomNumber, SysUser sysUser){
+        this.name=name;
+        this.block=block;
+        this.unit=unit;
+        this.roomNumber=roomNumber;
+        this.createTime= CalendarUtils.getDate();
+        this.creatorId=sysUser.getId();
+        this.status= SystemConstants.STATUS_OK.byteValue();
     }
 }
