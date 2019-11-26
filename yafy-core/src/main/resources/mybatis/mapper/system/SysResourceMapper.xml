@@ -23,9 +23,9 @@
   </resultMap>
 
   <select id="selectByUserId" resultType="com.yykj.system.entity.SysResource">
- select tsrc.* from t_sys_role tsr
+select tsrc.* from t_sys_role tsr
       left join r_sys_role_resource rsrr on tsr.id=rsrr.role_id
-      left join t_sys_resource tsrc on tsrc.id=rsrr.resource_id
+      left join t_sys_resource tsrc on tsrc.id=rsrr.resource_id and tsrc.`status`=0
       where EXISTS (select 0 from (
       select tsr2.id tsssrr from t_sys_user tsu
       left join r_sys_role_user rssu on tsu.id=rssu.uid
@@ -35,5 +35,6 @@
       and tsrc.id is not null
       group by tsrc.id
       order by tsrc.seq
+
   </select>
 </mapper>
