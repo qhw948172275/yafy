@@ -1,8 +1,6 @@
 package com.yykj.business.conf;
 
-import com.yykj.system.commons.JsonUtils;
 import com.yykj.system.commons.RedisUtils;
-import com.yykj.system.commons.StringUtils;
 import com.yykj.system.entity.SysResource;
 import com.yykj.system.entity.SysUser;
 import com.yykj.system.service.SysResourceService;
@@ -20,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 public class MyShiroRealm extends AuthorizingRealm {
     private final String resourceKey="resourceKey:";

@@ -22,7 +22,7 @@ public class RoomService extends AbstractBaseCrudService<Room,Integer> {
     public List<Room> selectRoomListByUserId(Integer userId) {
         Example example=new Example(tClass);
         Example.Criteria criteria=example.createCriteria();
-        criteria.andEqualTo("status",0).andEqualTo("creator_id",userId);
+        criteria.andEqualTo("status",0).andEqualTo("creatorId",userId);
         example.setOrderByClause("id desc");
         return mapper.selectByExample(example);
     }

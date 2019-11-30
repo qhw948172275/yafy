@@ -1,1 +1,0 @@
-select * from t_sys_user;
