@@ -9,7 +9,7 @@
 		<!--滚动策略-->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!--输出路径-->
-			<fileNamePattern>./logs/console.%d.log</fileNamePattern>
+			<fileNamePattern>./logs/yafy/console.%d.log</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
           <pattern>【console】%d{HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
@@ -24,7 +24,7 @@
 		<!--滚动策略-->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!--输出路径-->
-			<fileNamePattern>./logs/console.%d.error</fileNamePattern>
+			<fileNamePattern>./logs/yafy/console.%d.error</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
           <pattern>【console】%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
