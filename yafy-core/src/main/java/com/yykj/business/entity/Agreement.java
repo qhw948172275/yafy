@@ -1,5 +1,6 @@
 package com.yykj.business.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yykj.system.commons.CalendarUtils;
 import com.yykj.system.commons.SystemConstants;
 import io.swagger.annotations.ApiModelProperty;
@@ -23,6 +24,7 @@ public class Agreement {
     /**
      * 合同开始时间
      */
+    @JsonFormat(pattern = CalendarUtils.yyyy_MM_dd)
     @ApiModelProperty("合同开始时间")
     @Column(name = "agreement_strat_time")
     private Date agreementStratTime;
@@ -30,6 +32,7 @@ public class Agreement {
     /**
      * 合同结束时间
      */
+    @JsonFormat(pattern = CalendarUtils.yyyy_MM_dd)
     @ApiModelProperty("合同结束时间")
     @Column(name = "agreement_end_time")
     private Date agreementEndTime;
