@@ -50,14 +50,16 @@ public class AreaController extends BaseController {
     @ApiOperation(value = "套房列表",response =Area.class )
     @ApiImplicitParams({
             @ApiImplicitParam(name = "areaName",value="小区名称"),
-            @ApiImplicitParam(name="bigLandlordId",value = "大房东ID")
+            @ApiImplicitParam(name="bigLandlordId",value = "大房东ID"),
+            @ApiImplicitParam(name="unitName",value = "单元")
     })
     @GetMapping("areaList")
     public JsonResult areaList(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                               @RequestParam(value = "limit", defaultValue = "20") Integer limit,String areaName,Integer bigLandlordId){
+                               @RequestParam(value = "limit", defaultValue = "20") Integer limit,
+                               String areaName,Integer bigLandlordId,String unitName){
         try {
             PageHelper.startPage(page,limit);
-            List<Area> areaList=areaService.selectAreaListByUserId(getSysUer().getId(),areaName,bigLandlordId);
+            List<Area> areaList=areaService.selectAreaListByUserId(getSysUer().getId(),areaName,bigLandlordId,unitName);
             return JsonResultUtils.buildJsonOK(new PageInfo<>(areaList));
         }catch (Exception e){
             e.printStackTrace();

@@ -20,7 +20,7 @@ public class AreaService extends AbstractBaseCrudService<Area,Integer> {
      * create by: qhw
      * create time: 2019/11/20 0020 下午 17:33
      */
-    public List<Area> selectAreaListByUserId(Integer userId,String areaName,Integer bigLandlordId) {
+    public List<Area> selectAreaListByUserId(Integer userId,String areaName,Integer bigLandlordId,String unitName) {
         Example example=new Example(tClass);
         Example.Criteria criteria=example.createCriteria();
         criteria.andEqualTo("creatorId",userId).andEqualTo("status",0);
@@ -28,6 +28,11 @@ public class AreaService extends AbstractBaseCrudService<Area,Integer> {
             Example.Criteria criteria1=example.and();
             StringBuilder stringBuilder=new StringBuilder("%").append(areaName).append("%");
             criteria1.andLike("name",stringBuilder.toString());
+        }
+        if(StringUtils.isNotEmpty(unitName)){
+            Example.Criteria criteria1=example.and();
+            StringBuilder stringBuilder=new StringBuilder("%").append(unitName).append("%");
+            criteria1.andLike("unit",stringBuilder.toString());
         }
         if(bigLandlordId!=null){
             criteria.andEqualTo("bigLandlordId",bigLandlordId);
