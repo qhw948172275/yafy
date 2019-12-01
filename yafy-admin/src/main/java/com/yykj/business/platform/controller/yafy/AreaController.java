@@ -3,9 +3,11 @@ package com.yykj.business.platform.controller.yafy;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yykj.business.BaseController;
+import com.yykj.business.dto.AreaDto;
 import com.yykj.business.entity.Agreement;
 import com.yykj.business.entity.Area;
 import com.yykj.business.entity.RentManage;
+import com.yykj.business.response.AreaResonse;
 import com.yykj.business.response.BigLandlordDetailResponse;
 import com.yykj.business.service.AgreementService;
 import com.yykj.business.service.AreaService;
@@ -59,7 +61,7 @@ public class AreaController extends BaseController {
                                String areaName,Integer bigLandlordId,String unitName){
         try {
             PageHelper.startPage(page,limit);
-            List<Area> areaList=areaService.selectAreaListByUserId(getSysUer().getId(),areaName,bigLandlordId,unitName);
+            List<AreaResonse> areaList=areaService.selectAreaListByUserId(getSysUer().getId(),areaName,bigLandlordId,unitName);
             return JsonResultUtils.buildJsonOK(new PageInfo<>(areaList));
         }catch (Exception e){
             e.printStackTrace();
@@ -74,14 +76,15 @@ public class AreaController extends BaseController {
      */
     @ApiOperation("编辑保存套房")
     @PostMapping("save")
-    public JsonResult save(@RequestBody Area area){
+    public JsonResult save(@RequestBody AreaDto areaDto){
         try {
-            if(area.getId()==null){
-                area.setCreateTime(CalendarUtils.getDate());
-                area.setCreatorId(getSysUer().getId());
-                areaService.insert(area);
+
+            if(areaDto.getId()==null){
+                areaDto.setCreateTime(CalendarUtils.getDate());
+                areaDto.setCreatorId(getSysUer().getId());
+                areaService.save(areaDto);
             }else{
-                areaService.updateById(area);
+                areaService.updateByAreaDto(areaDto);
             }
             return JsonResultUtils.buildJsonOK();
         }catch (Exception e){

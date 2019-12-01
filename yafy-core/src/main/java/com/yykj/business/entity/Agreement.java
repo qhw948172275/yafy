@@ -69,6 +69,7 @@ public class Agreement {
     /**
      * 付款方式；0-月付，1-季付，2-半年付，3-年付
      */
+    @ApiModelProperty("付款方式；0-月付，1-季付，2-半年付，3-年付")
     @Column(name = "pay_type")
     private Byte payType;
 

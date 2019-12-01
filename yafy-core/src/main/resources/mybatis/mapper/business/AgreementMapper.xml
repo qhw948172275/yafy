@@ -24,4 +24,47 @@ FROM
 WHERE
 	raa.area_id =#{areaId}
   </select>
+    <select id="selectAgreementResponse" resultType="com.yykj.business.response.AgreementResponse">
+        SELECT
+        tgg.*,
+        ta.`name` areaName,
+        if(7>timestampdiff(day,DATE_FORMAT(NOW(), '%Y-%m-%d'),DATE_FORMAT(tgg.agreement_end_time, '%Y-%m-%d')),0,1) repo
+        FROM
+        t_area ta
+        left join r_area_agreement raa  on ta.id=raa.area_id
+        left join 	t_agreement tgg on raa.agreement_id=tgg.id and tgg.`status`=0
+        WHERE
+        ta.creator_id=#{userId}
+        and ta.`status`=0
+<if test="startTime != null">
+    and	tgg.agreement_strat_time >= #{startTime}
+</if>
+<if test="endTime !=null">
+    and  tgg.agreement_end_time &lt;=#{endTime}
+</if>
+<if test="areaName !=null ">
+    and (ta.name like #{areaName})
+</if>
+        ORDER BY  tgg.agreement_end_time
+    </select>
+    <select id="selectCheckAgreement" resultType="java.lang.Integer">
+SELECT
+	count(0)
+FROM
+ r_area_agreement raa
+left join 	t_agreement tgg on raa.agreement_id=tgg.id and tgg.`status`=0
+WHERE
+tgg.creator_id=#{userId}
+and raa.area_id=#{areaId}
+    </select>
+    <select id="selectAgreement" resultType="com.yykj.business.entity.Agreement">
+        SELECT
+	tgg.*
+FROM
+ r_area_agreement raa
+left join 	t_agreement tgg on raa.agreement_id=tgg.id
+WHERE
+tgg.creator_id=#{userId}
+and raa.area_id=#{areaId}
+    </select>
 </mapper>

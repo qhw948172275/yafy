@@ -14,4 +14,26 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
+  <select id="selectAreaListByUserId" resultType="com.yykj.business.response.AreaResonse">
+    SELECT
+	ta.*,
+	bl.`name` bigLandlordName
+FROM
+	t_area ta
+	LEFT JOIN big_landlord bl ON bl.id = ta.big_landlord_id
+	AND bl.`status` = 0
+WHERE
+	ta.creator_id =#{userId}
+	AND ta.`status` =0
+    <if test="areaName != null">
+    and (ta.name like #{areaName})
+    </if>
+    <if test="unitName != null">
+      and (ta.unit like #{unitName})
+    </if>
+    <if test="bigLandlordId != null">
+      and ta.big_landlord_id = #{bigLandlordId}
+    </if>
+    order by id desc
+  </select>
 </mapper>
