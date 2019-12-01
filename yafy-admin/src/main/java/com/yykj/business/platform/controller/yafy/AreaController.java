@@ -17,6 +17,7 @@ import com.yykj.system.commons.result.JsonResult;
 import com.yykj.system.commons.result.JsonResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -47,12 +48,16 @@ public class AreaController extends BaseController {
      * create time: 2019/11/20 0020 下午 17:09
      */
     @ApiOperation(value = "套房列表",response =Area.class )
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "areaName",value="小区名称"),
+            @ApiImplicitParam(name="bigLandlordId",value = "大房东ID")
+    })
     @GetMapping("areaList")
     public JsonResult areaList(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                               @RequestParam(value = "limit", defaultValue = "20") Integer limit){
+                               @RequestParam(value = "limit", defaultValue = "20") Integer limit,String areaName,Integer bigLandlordId){
         try {
             PageHelper.startPage(page,limit);
-            List<Area> areaList=areaService.selectAreaListByUserId(getSysUer().getId());
+            List<Area> areaList=areaService.selectAreaListByUserId(getSysUer().getId(),areaName,bigLandlordId);
             return JsonResultUtils.buildJsonOK(new PageInfo<>(areaList));
         }catch (Exception e){
             e.printStackTrace();
