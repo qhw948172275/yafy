@@ -4,11 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yykj.business.BaseController;
 import com.yykj.business.dto.AreaDto;
-import com.yykj.business.entity.Agreement;
 import com.yykj.business.entity.Area;
-import com.yykj.business.entity.RentManage;
+import com.yykj.business.response.AreaAgreeResponse;
 import com.yykj.business.response.AreaResonse;
-import com.yykj.business.response.BigLandlordDetailResponse;
 import com.yykj.business.service.AgreementService;
 import com.yykj.business.service.AreaService;
 import com.yykj.business.service.BigLandlordService;
@@ -122,8 +120,8 @@ public class AreaController extends BaseController {
     @GetMapping("detail")
     public JsonResult detail(@RequestParam Integer areaId){
         try {
-            Area area=areaService.getById(areaId);
-            return JsonResultUtils.buildJsonOKData("area",area);
+            AreaAgreeResponse agreeResponse=areaService.selectAreaAgreeResponse(areaId,getSysUer().getId());
+            return JsonResultUtils.buildJsonOKData("area",agreeResponse);
         }catch (Exception e){
             e.printStackTrace();
             return JsonResultUtils.buildJsonFailMsg(e.getMessage());

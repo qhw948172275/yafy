@@ -7,6 +7,7 @@ import com.yykj.business.dto.AreaDto;
 import com.yykj.business.entity.Agreement;
 import com.yykj.business.entity.Area;
 import com.yykj.business.entity.AreaAgreement;
+import com.yykj.business.response.AreaAgreeResponse;
 import com.yykj.business.response.AreaResonse;
 import com.yykj.system.commons.StringUtils;
 import com.yykj.system.commons.service.impl.AbstractBaseCrudService;
@@ -87,5 +88,9 @@ public class AreaService extends AbstractBaseCrudService<Area,Integer> {
         BeanUtils.copyProperties(areaDto,agreement);
         agreement.setId(areaDto.getAgreementId());
         agreementMapper.updateByPrimaryKeySelective(agreement);
+    }
+
+    public AreaAgreeResponse selectAreaAgreeResponse(Integer areaId, Integer userId) {
+        return areaMapper.selectAreaAgreeResponse(areaId,userId);
     }
 }

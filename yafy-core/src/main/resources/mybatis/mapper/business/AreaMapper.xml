@@ -36,4 +36,25 @@ WHERE
     </if>
     order by id desc
   </select>
+
+    <select id="selectAreaAgreeResponse" resultType="com.yykj.business.response.AreaAgreeResponse">
+ SELECT
+	tgg.id agreementId,
+	tgg.status agreementStatus,
+	tgg.deposit,
+	tgg.agreement_strat_time,
+	tgg.agreement_end_time,
+	tgg.degree,
+	tgg.remark,
+	tgg.pay_type,
+	taa.*
+FROM
+ r_area_agreement raa
+left join 	t_agreement tgg on raa.agreement_id=tgg.id and tgg.status =0
+left join t_area taa on raa.area_id=taa.id
+WHERE
+tgg.creator_id=#{userId}
+and raa.area_id=#{areaId}
+and taa.`status`=0
+    </select>
 </mapper>
