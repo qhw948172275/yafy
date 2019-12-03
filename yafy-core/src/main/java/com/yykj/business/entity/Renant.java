@@ -1,6 +1,7 @@
 package com.yykj.business.entity;
 
 import com.yykj.system.commons.SystemConstants;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -34,6 +35,8 @@ public class Renant {
 
     private Integer creatorId;
     private Date createTime;
+    @ApiModelProperty("小房间ID")
+    private Integer roomId;
 
     /**
      * @return id
@@ -146,5 +149,13 @@ public class Renant {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Integer roomId) {
+        this.roomId = roomId;
     }
 }

@@ -1,10 +1,14 @@
 package com.yykj.business.service;
 
 import com.yykj.business.dao.AgreementMapper;
+import com.yykj.business.dao.AgreementRenantMapper;
 import com.yykj.business.dao.AreaAgreementMapper;
 import com.yykj.business.dto.AgreementBigRepsonse;
+import com.yykj.business.dto.AgreementRenantDto;
 import com.yykj.business.entity.Agreement;
+import com.yykj.business.entity.AgreementRenant;
 import com.yykj.business.entity.AreaAgreement;
+import com.yykj.business.response.AgreementRenantResponse;
 import com.yykj.business.response.AgreementResponse;
 import com.yykj.system.commons.StringUtils;
 import com.yykj.system.commons.SystemConstants;
@@ -30,6 +34,8 @@ public class AgreementService extends AbstractBaseCrudService<Agreement,Integer>
     AgreementMapper agreementMapper;
     @Autowired
     AreaAgreementMapper areaAgreementMapper;
+    @Autowired
+    AgreementRenantMapper agreementRenantMapper;
     /**
      * description:  合同记录
      * create by: qhw
@@ -92,5 +98,46 @@ public class AgreementService extends AbstractBaseCrudService<Agreement,Integer>
 
     public List<Agreement> selectAgreement(Integer areaId,Integer userId){
         return agreementMapper.selectAgreement(areaId,userId);
+    }
+    /**
+     * description:查询租客合同列表
+     * create by: qhw
+     * create time: 2019/12/3 0003 下午 17:48
+     */
+    public List<AgreementRenantResponse> selectAgreementRenantResponse(Integer userId, Integer areaId, String areaName, String startTime, String endTime) {
+        areaName=StringUtils.isEmpty(areaName)?null:new StringBuilder("%").append(areaName).append("%").toString();
+        startTime=StringUtils.isEmpty(startTime)?null:startTime;
+        endTime=StringUtils.isEmpty(endTime)?null:endTime;
+        return agreementMapper.selectAgreementRenantResponse(userId,areaId,areaName,startTime,endTime);
+    }
+    /**
+     * description:租客续合同
+     * create by: qhw
+     * create time: 2019/12/3 0003 下午 18:22
+     */
+    @Transactional
+    public void addAgreeRenant(AgreementRenantDto agreementRenantDto) {
+        if(this.selectCheckAgreementRenant(agreementRenantDto.getRenantId(),agreementRenantDto.getCreatorId())>0){
+            throw new RuntimeException("该租客有合同没有结束");
+        }
+        Agreement agreement=new Agreement();
+        BeanUtils.copyProperties(agreementRenantDto,agreement);
+        mapper.insert(agreement);
+        AgreementRenant agreementRenant=new AgreementRenant();
+        agreementRenant.setAgreementId(agreement.getId());
+        agreementRenant.setRenantId(agreementRenantDto.getRenantId());
+        agreementRenantMapper.insert(agreementRenant);
+    }
+
+    /**
+     * description:查询是否存在没有结束的合同
+     * create by: qhw
+     * create time: 2019/12/1 0001 下午 20:03
+     */
+    public Integer selectCheckAgreementRenant(Integer renantId,Integer userId){
+        if(renantId==null){
+            throw new RuntimeException("住客ID不能为空");
+        }
+        return agreementMapper.selectCheckAgreementRenant(renantId,userId);
     }
 }

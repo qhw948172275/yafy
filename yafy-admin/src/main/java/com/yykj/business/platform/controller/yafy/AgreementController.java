@@ -13,6 +13,7 @@ import com.yykj.system.commons.result.JsonResult;
 import com.yykj.system.commons.result.JsonResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +37,12 @@ public class AgreementController extends BaseController {
      * create by: qhw
      * create time: 2019/11/25 0025 下午 22:28
      */
-    @ApiOperation(value = "合同管理列表",response =Agreement.class )
+    @ApiOperation(value = "合同管理列表",response =AgreementResponse.class )
     @GetMapping("index")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "areaId",value = "套房ID"),
+            @ApiImplicitParam(name = "areaName",value = "小区名称")
+    })
     public JsonResult index(@RequestParam(value = "page", defaultValue = "1") Integer page,
                             @RequestParam(value = "limit", defaultValue = "20") Integer limit,
                             Integer areaId,String areaName,String startTime,String endTime){

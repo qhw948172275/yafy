@@ -14,4 +14,24 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="key_path" jdbcType="VARCHAR" property="keyPath" />
   </resultMap>
+  <select id="selectRoomListByUserId" resultType="com.yykj.business.response.RoomAreaRepsonse">
+    SELECT
+	tr.*, ta.`name` areaName,ta.unit unitName,ta.roomNumber
+FROM
+	t_room tr
+	LEFT JOIN t_area ta ON tr.area_id = ta.id
+where tr.creator_id=#{userId}
+and tr.status=0 and ta.status=0
+<if test="areaId !=null">
+      and ta.id=#{areaId}
+</if>
+<if test="areaName != null">
+  and  ta.`name` like #{areaName}
+</if>
+<if test="unitName != null">
+      and  ta.`unit` like #{unitName}
+</if>
+ORDER BY tr.id desc
+
+  </select>
 </mapper>

@@ -10,7 +10,6 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
 @EnableScheduling
-@ComponentScan("com.yykj")
 @MapperScan(basePackages = { "com.yykj.business.dao","com.yykj.system.dao" })
 public class WebApplication {
 

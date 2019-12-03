@@ -4,12 +4,15 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yykj.business.BaseController;
 import com.yykj.business.entity.Room;
+import com.yykj.business.response.RoomAreaRepsonse;
 import com.yykj.business.service.RoomService;
 import com.yykj.system.commons.CalendarUtils;
 import com.yykj.system.commons.SystemConstants;
 import com.yykj.system.commons.result.JsonResult;
 import com.yykj.system.commons.result.JsonResultUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,12 +37,16 @@ public class RoomController extends BaseController {
      * create time: 2019/11/20 0020 下午 16:47
      */
     @GetMapping("roomList")
+    @ApiImplicitParams({
+            @ApiImplicitParam
+    })
     @ApiOperation(value = "房间列表",response =Room.class )
     public JsonResult roomList(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                               @RequestParam(value = "limit", defaultValue = "20") Integer limit){
+                               @RequestParam(value = "limit", defaultValue = "20") Integer limit,
+                               String areaName,String unitName,Integer araeaId){
         try {
             PageHelper.startPage(page,limit);
-            List<Room> rooms=roomService.selectRoomListByUserId(getSysUer().getId());
+            List<RoomAreaRepsonse> rooms=roomService.selectRoomListByUserId(getSysUer().getId(),areaName,unitName,araeaId);
             return JsonResultUtils.buildJsonOK(new PageInfo<>(rooms));
         }catch (Exception e){
             e.printStackTrace();
@@ -105,4 +112,5 @@ public class RoomController extends BaseController {
             return JsonResultUtils.buildJsonFailMsg(e.getMessage());
         }
     }
+
 }

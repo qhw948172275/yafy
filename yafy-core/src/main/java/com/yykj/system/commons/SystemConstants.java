@@ -1,6 +1,7 @@
 package com.yykj.system.commons;
 
 public class SystemConstants {
+	public static final String PEAC_SG="%";
 	/**
 	 * 默认密码
 	 */

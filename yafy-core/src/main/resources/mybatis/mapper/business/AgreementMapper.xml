@@ -28,6 +28,8 @@ WHERE
         SELECT
         tgg.*,
         ta.`name` areaName,
+        ta.unit,
+        ta.room_number,
         if(7>timestampdiff(day,DATE_FORMAT(NOW(), '%Y-%m-%d'),DATE_FORMAT(tgg.agreement_end_time, '%Y-%m-%d')),0,1) repo
         FROM
         t_area ta
@@ -53,9 +55,10 @@ SELECT
 	count(0)
 FROM
  r_area_agreement raa
-left join 	t_agreement tgg on raa.agreement_id=tgg.id and tgg.`status`=0
+left join 	t_agreement tgg on raa.agreement_id=tgg.id
 WHERE
 tgg.creator_id=#{userId}
+and tgg.`status`=0
 and raa.area_id=#{areaId}
     </select>
     <select id="selectAgreement" resultType="com.yykj.business.entity.Agreement">
@@ -67,5 +70,49 @@ left join 	t_agreement tgg on raa.agreement_id=tgg.id
 WHERE
 tgg.creator_id=#{userId}
 and raa.area_id=#{areaId}
+    </select>
+    <select id="selectAgreementRenantResponse" resultType="com.yykj.business.response.AgreementRenantResponse">
+        SELECT
+        tgg.*,
+        ta.`name` areaName,
+        ta.unit,
+        ta.room_number,
+        trm.type,
+        tr.name renantName,
+        tr.phone renantPhone,
+        if(7>timestampdiff(day,DATE_FORMAT(NOW(), '%Y-%m-%d'),DATE_FORMAT(tgg.agreement_end_time, '%Y-%m-%d')),0,1) repo
+        FROM
+        t_renant tr
+        left join r_agreement_renant raa  on tr.id=raa.renant_id
+        left join 	t_agreement tgg on raa.agreement_id=tgg.id
+        left join  t_room trm on trm.id=tr.room_id
+        left join t_area ta on ta.id=trm.area_id
+        WHERE
+        ta.creator_id=#{userId}
+        and tgg.`status`=0
+        and ta.`status`=0
+        and tr.`status`=0
+        and trm.`status`=0
+        <if test="startTime != null">
+            and	tgg.agreement_strat_time >= #{startTime}
+        </if>
+        <if test="endTime !=null">
+            and  tgg.agreement_end_time &lt;=#{endTime}
+        </if>
+        <if test="areaName !=null ">
+            and (ta.name like #{areaName})
+        </if>
+        ORDER BY  tgg.agreement_end_time
+    </select>
+    <select id="selectCheckAgreementRenant" resultType="java.lang.Integer">
+SELECT
+	count(0)
+FROM
+ r_agreement_renant raa
+left join 	t_agreement tgg on raa.agreement_id=tgg.id
+WHERE
+tgg.creator_id=#{userId}
+and tgg.`status`=0
+and raa.renant_id=#{renantId}
     </select>
 </mapper>

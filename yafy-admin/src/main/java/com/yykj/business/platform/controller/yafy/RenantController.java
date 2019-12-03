@@ -76,6 +76,7 @@ public class RenantController extends BaseController {
                 renant.setCreatorId(getSysUer().getId());
                 renant.setCreateTime(CalendarUtils.getDate());
                 renantService.insert(renant);
+
             }else{
                 renantService.updateById(renant);
             }
