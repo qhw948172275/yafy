@@ -32,9 +32,10 @@ WHERE
         FROM
         t_area ta
         left join r_area_agreement raa  on ta.id=raa.area_id
-        left join 	t_agreement tgg on raa.agreement_id=tgg.id and tgg.`status`=0
+        left join 	t_agreement tgg on raa.agreement_id=tgg.id
         WHERE
         ta.creator_id=#{userId}
+        and tgg.`status`=0
         and ta.`status`=0
 <if test="startTime != null">
     and	tgg.agreement_strat_time >= #{startTime}
