@@ -16,7 +16,7 @@
   </resultMap>
   <select id="selectRoomListByUserId" resultType="com.yykj.business.response.RoomAreaRepsonse">
     SELECT
-	tr.*, ta.`name` areaName,ta.unit unitName,ta.roomNumber
+	tr.*, ta.`name` areaName,ta.unit unitName,ta.room_number
 FROM
 	t_room tr
 	LEFT JOIN t_area ta ON tr.area_id = ta.id
