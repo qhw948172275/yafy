@@ -50,7 +50,7 @@ public class LoginController {
             json.putPOJO("token", subject.getSession().getId());
             json.put("msg", "登录成功");
             SysUser sysUser=(SysUser)subject.getPrincipal();
-            new LoginLogThread(loginLogService,"182.150.27.185",sysUser).start();
+            new LoginLogThread(loginLogService,getIpAddr(request),sysUser).start();
             //记录登陆日志
             return JsonResultUtils.buildJsonOK(json);
         } catch (IncorrectCredentialsException e) {
