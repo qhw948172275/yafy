@@ -40,7 +40,7 @@ public class RoomController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam
     })
-    @ApiOperation(value = "房间列表",response =Room.class )
+    @ApiOperation(value = "房间列表",response =RoomAreaRepsonse.class )
     public JsonResult roomList(@RequestParam(value = "page", defaultValue = "1") Integer page,
                                @RequestParam(value = "limit", defaultValue = "20") Integer limit,
                                String areaName,String unitName,Integer araeaId){

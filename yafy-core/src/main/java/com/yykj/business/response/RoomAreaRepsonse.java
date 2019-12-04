@@ -15,6 +15,8 @@ public class RoomAreaRepsonse extends Room {
     private String unitName;
     @ApiModelProperty("门牌号")
     private String roomNumber;
+    @ApiModelProperty("栋")
+    private String block;
 
     public String getAreaName() {
         return areaName;
@@ -38,5 +40,13 @@ public class RoomAreaRepsonse extends Room {
 
     public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
+    }
+
+    public String getBlock() {
+        return block;
+    }
+
+    public void setBlock(String block) {
+        this.block = block;
     }
 }
