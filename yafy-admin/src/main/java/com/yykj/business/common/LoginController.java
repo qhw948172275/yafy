@@ -1,6 +1,8 @@
 package com.yykj.business.common;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.yykj.system.commons.ip.IPUtils;
 import com.yykj.system.dto.LoginUserDto;
 import com.yykj.system.service.LoginLogService;
 import com.yykj.system.commons.CalendarUtils;
@@ -47,19 +49,9 @@ public class LoginController {
             subject.login(token);
             json.putPOJO("token", subject.getSession().getId());
             json.put("msg", "登录成功");
+            SysUser sysUser=(SysUser)subject.getPrincipal();
+            new LoginLogThread(loginLogService,"182.150.27.185",sysUser).start();
             //记录登陆日志
-            SysLoginLog loginLog = new SysLoginLog();
-            SysUser sysUser = (SysUser) subject.getPrincipal();
-//            JsonNode ipInfo = IPUtils.getIPInfo(getIpAddr(request));
-            loginLog.setUserId(sysUser.getId());
-            loginLog.setLoginTime(CalendarUtils.getDate());
-            loginLog.setRealmName(sysUser.getRealName());
-            loginLog.setSchoolId(sysUser.getSchoolId());
-            loginLog.setUserName(sysUser.getName());
-            loginLog.setLoginIp(getIpAddr(request));
-//            loginLog.setLoginProvince(IPUtils.getProvince(ipInfo));
-//            loginLog.setLoginAddress(IPUtils.getAddress(ipInfo));
-            loginLogService.insert(loginLog);
             return JsonResultUtils.buildJsonOK(json);
         } catch (IncorrectCredentialsException e) {
             json.put("msg", "密码错误");

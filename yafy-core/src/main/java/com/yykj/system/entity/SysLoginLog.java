@@ -222,4 +222,19 @@ public class SysLoginLog {
     public void setSchoolId(Integer schoolId) {
         this.schoolId = schoolId;
     }
+
+    @Override
+    public String toString() {
+        return "\nSysLoginLog{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", realmName='" + realmName + '\'' +
+                ", loginIp='" + loginIp + '\'' +
+                ", loginProvince='" + loginProvince + '\'' +
+                ", loginAddress='" + loginAddress + '\'' +
+                ", loginTime=" + loginTime +
+                ", schoolId=" + schoolId +
+                '}';
+    }
 }
