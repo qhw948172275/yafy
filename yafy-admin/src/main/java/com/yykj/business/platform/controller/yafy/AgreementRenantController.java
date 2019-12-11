@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.yykj.business.BaseController;
 import com.yykj.business.dto.AgreementRenantDto;
 import com.yykj.business.response.AgreementRenantResponse;
-import com.yykj.business.response.AgreementResponse;
 import com.yykj.business.service.AgreementService;
 import com.yykj.system.commons.CalendarUtils;
 import com.yykj.system.commons.result.JsonResult;

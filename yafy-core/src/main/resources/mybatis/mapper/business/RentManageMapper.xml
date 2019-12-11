@@ -19,4 +19,74 @@ where rra.area_id=#{areaId}
 and rm.`status`=1
 ORDER BY rm.create_time desc
   </select>
+
+  <select id="selectRentManageService" resultType="com.yykj.business.response.RentManageRoomResponse">
+    SELECT
+	ta.`name` areaName,
+	ta.block,
+	ta.unit,
+	ta.room_number roomNumber,
+	tm.type,
+	tm.id roomId,
+	rm.* ,
+	  if(7>timestampdiff(day,DATE_FORMAT(NOW(), '%Y-%m-%d'),DATE_FORMAT(rm.next_pay_time, '%Y-%m-%d')),0,1) repo
+FROM
+	t_room tm
+	LEFT JOIN r_rent_manage_room rrmr ON tm.id = rrmr.room_id
+	LEFT JOIN rent_manage rm ON rm.id = rrmr.rent_manage_id
+	LEFT JOIN t_area ta ON ta.id = tm.area_id
+	where tm.`status`=0 and rm.`status`=0 and ta.`status`=0
+	and tm.creator_id=#{userId}
+	ORDER BY rm.next_pay_time
+  </select>
+    <select id="selectRentManageRoomResponse" resultType="com.yykj.business.response.RentManageRoomResponse">
+      SELECT
+	ta.`name`,
+	ta.block,
+	ta.unit,
+	ta.room_number,
+	tm.type,
+	rm.*
+FROM
+	t_room tm
+	LEFT JOIN r_rent_manage_room rrmr ON tm.id = rrmr.room_id
+	LEFT JOIN rent_manage rm ON rm.id = rrmr.rent_manage_id
+	LEFT JOIN t_area ta ON ta.id = tm.area_id
+	where
+	tm.id=#{roomId} and rm.id=#{rentManageId}
+	and tm.`status`=0 and rm.`status`=0 and ta.`status`=0
+	and tm.creator_id=#{userId}
+    </select>
+    <select id="selectRentRentManageAreaResponse" resultType="com.yykj.business.response.RentManageAreaResponse">
+ SELECT
+	ta.`name` areaName,
+	ta.block,
+	ta.unit,
+	ta.room_number roomNumber,
+	ta.id areaId,
+	rm.* ,
+	  if(7>timestampdiff(day,DATE_FORMAT(NOW(), '%Y-%m-%d'),DATE_FORMAT(rm.next_pay_time, '%Y-%m-%d')),0,1) repo
+FROM
+	t_area ta
+	LEFT JOIN r_rent_area rrmr ON ta.id = rrmr.area_id
+	LEFT JOIN rent_manage rm ON rm.id = rrmr.rent_manage_id
+	where  rm.`status`=0 and ta.`status`=0
+	and ta.creator_id=#{userId}
+	ORDER BY rm.next_pay_time
+    </select>
+	<select id="selectOneRentManageAreaResponse" resultType="com.yykj.business.response.RentManageAreaResponse">
+		 SELECT
+	ta.`name` areaName,
+	ta.block,
+	ta.unit,
+	ta.room_number roomNumber,
+	ta.id areaId,
+	rm.*
+FROM
+	t_area ta
+	LEFT JOIN r_rent_area rrmr ON ta.id = rrmr.area_id
+	LEFT JOIN rent_manage rm ON rm.id = rrmr.rent_manage_id
+	where  ta.id=#{areaId} and rm.id=#{rentManageId}
+	and rm.`status`=0 and ta.`status`=0
+	</select>
 </mapper>

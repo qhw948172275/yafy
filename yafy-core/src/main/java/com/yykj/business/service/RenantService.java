@@ -2,11 +2,15 @@ package com.yykj.business.service;
 
 import com.yykj.business.dao.RenantMapper;
 import com.yykj.business.dao.RoomMapper;
+import com.yykj.business.dao.RoomRenantMapper;
 import com.yykj.business.dto.RenantDto;
+import com.yykj.business.dto.RenantpDto;
 import com.yykj.business.entity.Renant;
 import com.yykj.business.entity.Room;
+import com.yykj.business.entity.RoomRenant;
 import com.yykj.system.commons.service.impl.AbstractBaseCrudService;
 import com.yykj.system.entity.SysUser;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +29,8 @@ public class RenantService extends AbstractBaseCrudService<Renant,Integer> {
     RenantMapper renantMapper;
     @Autowired
     RoomMapper roomMapper;
+    @Autowired
+    RoomRenantMapper roomRenantMapper;
 
     /**
      * description:添加普通租客信息
@@ -49,5 +55,19 @@ public class RenantService extends AbstractBaseCrudService<Renant,Integer> {
         criteria.andEqualTo("creatorId",userId).andEqualTo("status",0);
         example.setOrderByClause("id desc");
         return mapper.selectByExample(example);
+    }
+
+    @Transactional
+    public void save(RenantpDto renant) {
+        Renant renant1=new Renant();
+        BeanUtils.copyProperties(renant,renant1);
+        mapper.insert(renant1);
+        RoomRenant roomRenant=new RoomRenant();
+        roomRenant.setRenantId(renant1.getId());
+        roomRenant.setRoomId(renant.getRoomId());
+        roomRenantMapper.insert(roomRenant);
+        Room room=roomMapper.selectByPrimaryKey(renant.getRoomId());
+        room.setTenantNember(room.getTenantNember()+1);
+        roomMapper.updateByPrimaryKeySelective(room);
     }
 }

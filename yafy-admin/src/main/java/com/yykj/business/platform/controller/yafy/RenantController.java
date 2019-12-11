@@ -3,6 +3,7 @@ package com.yykj.business.platform.controller.yafy;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yykj.business.BaseController;
+import com.yykj.business.dto.RenantpDto;
 import com.yykj.business.entity.Renant;
 import com.yykj.business.service.RenantService;
 import com.yykj.system.commons.CalendarUtils;
@@ -70,16 +71,13 @@ public class RenantController extends BaseController {
      */
     @ApiOperation("编辑/添加普通租客信息")
     @PostMapping("save")
-    public JsonResult save(@RequestBody Renant renant){
+    public JsonResult save(@RequestBody RenantpDto renant){
         try {
             if(renant.getId()==null){
                 renant.setCreatorId(getSysUer().getId());
                 renant.setCreateTime(CalendarUtils.getDate());
-                renantService.insert(renant);
-
-            }else{
-                renantService.updateById(renant);
             }
+            renantService.save(renant);
             return JsonResultUtils.buildJsonOK();
         }catch (Exception e){
             e.printStackTrace();
