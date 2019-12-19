@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yykj.business.dao.AgreementMapper">
+<mapper namespace="com.yykj.business.dao.selectAgreementRenantResponseAgreementMapper">
   <resultMap id="BaseResultMap" type="com.yykj.business.entity.Agreement">
     <!--
       WARNING - @mbg.generated
@@ -93,6 +93,9 @@ and raa.area_id=#{areaId}
         and ta.`status`=0
         and tr.`status`=0
         and trm.`status`=0
+        <if test="areaId !=null">
+            and  ta.id =#{areaId}
+        </if>
         <if test="startTime != null">
             and	tgg.agreement_strat_time >= #{startTime}
         </if>
