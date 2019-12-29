@@ -1,5 +1,6 @@
 package com.yykj.business.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yykj.system.commons.CalendarUtils;
 import com.yykj.system.commons.SystemConstants;
 import io.swagger.annotations.ApiModelProperty;
@@ -19,6 +20,7 @@ public class RentManage {
      */
     @ApiModelProperty("上次缴纳租金时间")
     @Column(name = "last_pay_time")
+    @JsonFormat(pattern = CalendarUtils.yyyy_MM_dd)
     private Date lastPayTime;
 
     /**
@@ -26,6 +28,7 @@ public class RentManage {
      */
     @ApiModelProperty("下次缴纳租金时间")
     @Column(name = "next_pay_time")
+    @JsonFormat(pattern = CalendarUtils.yyyy_MM_dd)
     private Date nextPayTime;
 
     /**

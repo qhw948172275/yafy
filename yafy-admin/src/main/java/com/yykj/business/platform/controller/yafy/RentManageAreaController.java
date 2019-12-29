@@ -51,7 +51,7 @@ public class RentManageAreaController extends BaseController {
         return JsonResultUtils.buildJsonOK();
     }
 
-    @ApiOperation("套房费用信息编辑")
+    @ApiOperation(value = "套房费用信息编辑",response = RentManageAreaResponse.class)
     @GetMapping("edit")
     public JsonResult edit(@RequestParam Integer areaId,@RequestParam Integer rentManageId){
         RentManageAreaResponse rentManageAreaResponse=rentManageService.selectOneRentManageAreaResponse(areaId,rentManageId);
