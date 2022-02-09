@@ -12,7 +12,7 @@
     <artifactId>yafy-admin</artifactId>
     <packaging>jar</packaging>
     <properties>
-        <shiro.version>1.4.0</shiro.version>
+        <shiro.version>1.7.1</shiro.version>
     </properties>
     <dependencies>
         <dependency>
